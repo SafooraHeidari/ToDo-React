@@ -1,6 +1,6 @@
 import {Card, ProgressBar} from "react-bootstrap";
 
-export default function CategoryCard(){
+export default function ProgressCard(){
     return(
             <Card style={{border:'2px solid gray',borderRadius:'15px',width:'20%'}}>
                 <Card.Body>

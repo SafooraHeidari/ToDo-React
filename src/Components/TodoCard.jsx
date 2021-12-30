@@ -1,8 +1,10 @@
 import {Accordion, Card, useAccordionButton} from "react-bootstrap";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Pen, X, PlusCircle, CaretDown, ArrowBarDown, ChevronDown} from 'react-bootstrap-icons';
+import {UserContext} from "../root";
 
-const TodoCard = ({todo,setDataList, dataList}) => {
+const TodoCard = ({todo,setDataList, dataList, dispatch}) => {
+
     const [toDo, setToDo] = useState(todo)
 
     const handleAddToDo = () => {
@@ -15,7 +17,8 @@ const TodoCard = ({todo,setDataList, dataList}) => {
         setToDo({...toDo, subTasks:[...toDo.subTasks.filter(todo => todo !== item), prompt('Edit the todo:', item)]})
     }
     const handleDeleteTask = (id) => {
-        setDataList(dataList.filter(item => item.id !== id))
+        // setDataList(dataList.filter(item => item.id !== id))
+        dispatch({type: 'deleteTask', payload: {id}})
     }
 
     return (

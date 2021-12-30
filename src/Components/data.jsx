@@ -1,12 +1,6 @@
-import CardList from "./CardList";
-import {Image} from "react-bootstrap";
-import image from '../img_avatar2.png'
-import CategoryCard from "./CategoryCard";
-import EditAddForm from "./EditAddForm";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 
-
-const data = [
+const todoList = [
     {
         id: 1,
         category: 'uni',
@@ -44,14 +38,28 @@ const data = [
     }];
 
 
-export default function CardContainer(){
-    const [card, setCard] = useState(data);
-    return(
+
+export default function Data() {
+
+    const [userList, setUserList] = useState([]);
+    const [list, setList] = useState([]);
+
+    const getUsers = () => {
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.json())
+            .then(data => setList(data));
+    }
+
+    useEffect(() => {
+        document.title = 'To Do App';
+        getUsers();
+    }, []);
+
+    return (
         <>
-            <Image style={{width:'100px'}} src={image} roundedCircle />
-            <CardList card={card} setCard={setCard}/>
-            <CategoryCard/>
-            <EditAddForm setCard={setCard} card={card}/>
+            {list.map(item => setUserList([...userList, {id: item.id, name:item.name, description:item.email, username:item.username, todo:todoList}]))};
+            [userList]
         </>
+
     )
 }
