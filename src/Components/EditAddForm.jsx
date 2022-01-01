@@ -1,5 +1,5 @@
 import {useState, useContext} from "react";
-import {Link} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {Button, InputGroup, FormControl} from "react-bootstrap";
 import {PlusCircle} from "react-bootstrap-icons";
 import {ToDoContext} from "../root";
@@ -18,6 +18,7 @@ export default function EditAddForm({setCard, card}) {
     const [cntr, setCntr] = useState(0);
     const [curData, setcurData] = useState(data);
     const {toDoList, dispatch} = useContext(ToDoContext);
+    const pharams = useParams()
 
     const handleSubmit = () => {
         // setCard([...card,curData]);
@@ -83,9 +84,12 @@ export default function EditAddForm({setCard, card}) {
                     onChange={e => setcurData({...curData, deadLine: e.target.value})}
                 />
             </InputGroup>
-            <Button variant="primary" onClick={handleSubmit}>
-                Submit
-            </Button>
+            <Link to={`/${pharams.id}`}>
+                <Button variant="primary" onClick={handleSubmit}>
+                    Submit
+                </Button>
+            </Link>
+
 
         </div>
     )

@@ -6,8 +6,9 @@ import ToDoCardList from "./ToDoCardList";
 import EditAddForm from "./EditAddForm";
 import ProfileCard from "./ProfileCard";
 import ProgressCard from "./ProgressCard";
-import {useParams} from "react-router";
+import {Outlet, useParams} from "react-router";
 import {UserContext} from "../root";
+import AddButton from "./addButton";
 
 
 const toDoList = [
@@ -63,12 +64,11 @@ export default function UserProfile({name, image, description}){
 
     return(
         <>
-            <ProfileCard name={user.name} image={'https://robohash.org/' + user.username} description={user.email}/>
+            <ProfileCard name={user.name} image={'https://i.pravatar.cc/150?img=' + user.id} description={user.email}/>
             <ToDoCardList card={card} setCard={setCard}/>
             <ProgressCard/>
-            <Button style={{width:'20%'}} variant="secondary">
-                <Link to='/addEdit'>Plus</Link>
-            </Button>
+
+            <Outlet/>
             {/*<EditAddForm setCard={setCard} card={card}/>*/}
         </>
     )

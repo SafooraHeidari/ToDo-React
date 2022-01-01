@@ -14,6 +14,7 @@ const UserList = () => {
             <Container className='mt-3'>
                 <Row className='mt-3'>
                     <Col>
+                        {console.log(userList)}
                         <InputGroup className="mb-3">
                             <FormControl
                                 placeholder="Monster name"
@@ -34,7 +35,7 @@ const UserList = () => {
                                     <Link to={`/${item.id}`}>
                                         <ProfileCard name={item.name}
                                                   description={item.email}
-                                                  image={'https://robohash.org/' + item.username}/>
+                                                  image={'https://i.pravatar.cc/150?img=' + item.id}/>
                                     </Link>
                                 </Col>))}
                 </Row>

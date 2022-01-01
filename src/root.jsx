@@ -6,7 +6,7 @@ import EditAddForm from "./Components/EditAddForm";
 import reducer from "./Components/reducer";
 
 import Data from "./Components/data"
-
+import AddButton from "./Components/addButton";
 
 
 const todoList = [
@@ -48,11 +48,15 @@ const todoList = [
 
 
 export const UserContext = createContext([]);
-export const ToDoContext = createContext({ toDoList: [], dispatch: () => { } });
+export const ToDoContext = createContext({
+    toDoList: [], dispatch: () => {
+    }
+});
 
 export default function Root() {
 
     const [userList, setUserList] = useState([]);
+    const [finalList, setFinalList] = useState([]);
     const [toDoList, dispatch] = useReducer(reducer, todoList);
     // const [toDoList, dispatch] = useReducer(reducer, Data);
 
@@ -60,8 +64,9 @@ export default function Root() {
         fetch('https://jsonplaceholder.typicode.com/users')
             .then(response => response.json())
             .then(data => setUserList(data))
-            // .then(data => data.map(item => (setUserList([...userList, {id: item.id, name:item.name, description:item.email, username:item.username, todo:todoList}]))));
+        // .then(data => data.map(item => (setUserList([...userList,{id: item.id, name:item.name, description:item.email, username:item.username, todo:todoList}]))));
     }
+
 
     useEffect(() => {
         document.title = 'To Do App';
@@ -69,16 +74,18 @@ export default function Root() {
     }, []);
 
     return (
-            <BrowserRouter>
-                <UserContext.Provider value={userList}>
-                    <ToDoContext.Provider value={{toDoList, dispatch}}>
-                        <Routes>
-                            <Route exact path='/' element={<UserList/>}/>
-                            <Route path='/:id' element={<UserProfile/>}/>
-                            <Route path='/addEdit' element={<EditAddForm/>}/>
-                        </Routes>
-                    </ToDoContext.Provider>
-                </UserContext.Provider>
-            </BrowserRouter>
+        <BrowserRouter>
+            <UserContext.Provider value={userList}>
+                <ToDoContext.Provider value={{toDoList, dispatch}}>
+                    <Routes>
+                        <Route exact path='/' element={<UserList/>}/>
+                        <Route path=':id' element={<UserProfile/>}>
+                            <Route index element={<AddButton/>}/>
+                            <Route path='addEdit' element={<EditAddForm/>}/>
+                        </Route>
+                    </Routes>
+                </ToDoContext.Provider>
+            </UserContext.Provider>
+        </BrowserRouter>
     )
 }
