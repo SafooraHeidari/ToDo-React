@@ -4,6 +4,13 @@ import './index.css';
 import Root from './root';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Test from "./Components/test";
+
+import { makeServer } from "./server"
+
+if (process.env.NODE_ENV === "development") {
+    makeServer({ environment: "development" })
+}
 
 ReactDOM.render(
   <React.StrictMode>

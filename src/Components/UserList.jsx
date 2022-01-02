@@ -14,7 +14,6 @@ const UserList = () => {
             <Container className='mt-3'>
                 <Row className='mt-3'>
                     <Col>
-                        {console.log(userList)}
                         <InputGroup className="mb-3">
                             <FormControl
                                 placeholder="Monster name"

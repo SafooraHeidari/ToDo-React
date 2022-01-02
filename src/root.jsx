@@ -61,11 +61,21 @@ export default function Root() {
     // const [toDoList, dispatch] = useReducer(reducer, Data);
 
     const getUsers = () => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then(data => setUserList(data))
+
+        fetch("/api/users")
+            .then((res) => res.json())
+            .then((json) => {
+                setUserList(json.users)
+            })
+
+
+
+        // fetch('https://jsonplaceholder.typicode.com/users')
+        //     .then(response => response.json())
+        //     .then(data => setUserList(data))
         // .then(data => data.map(item => (setUserList([...userList,{id: item.id, name:item.name, description:item.email, username:item.username, todo:todoList}]))));
     }
+
 
 
     useEffect(() => {
