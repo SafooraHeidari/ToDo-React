@@ -1,56 +1,54 @@
+import {Link} from "react-router-dom";
+
 import {Accordion, Card, useAccordionButton} from "react-bootstrap";
-import {useContext, useState} from "react";
-import {Pen, X, PlusCircle, CaretDown, ArrowBarDown, ChevronDown} from 'react-bootstrap-icons';
-import {UserContext} from "../root";
+import {Pen, X, PlusCircle, ChevronDown} from 'react-bootstrap-icons';
 
-const TodoCard = ({todo,setDataList, dataList, dispatch}) => {
+export default function TodoCard ({todoId, todo, userId, dispatch}) {
 
-    const [toDo, setToDo] = useState(todo)
-
-    const handleAddToDo = () => {
-        setToDo({...toDo, subTasks:[...toDo.subTasks , prompt('Enter the todo:')]})
+    const handleAddSubTask = () => {
+        dispatch({type: 'handleAddSubTask', payload: {userId: userId, todoId: todoId, title: prompt('Enter the todo:')}})
     }
-    const handleDelete = (item) => {
-        setToDo({...toDo, subTasks: [...toDo.subTasks.filter(todo => todo !== item)]})
+    const handleDeleteSubTask = (item) => {
+        dispatch({type:'handleDeleteSubTask',payload:{userId: userId, todoId: todoId, taskName: item}})
     }
-    const handleEdit = (item) => {
-        setToDo({...toDo, subTasks:[...toDo.subTasks.filter(todo => todo !== item), prompt('Edit the todo:', item)]})
+    const handleEditSubTask = (item) => {
+        dispatch({type:"handleEditSubTask", payload:{userId: userId, todoId: todoId, oldTaskName: item, newTaskName: prompt('Edit the todo:', item)}})
     }
     const handleDeleteTask = (id) => {
-        // setDataList(dataList.filter(item => item.id !== id))
-        dispatch({type: 'deleteTask', payload: {id}})
+        dispatch({type: 'deleteTask', payload: {userId: userId, todoId: id}})
     }
 
     return (
         <Card className="text-center">
                 <Card.Header>
                     <div style={{display:'flex',justifyContent:'space-between'}}>
-                        <ChevronDown onClick={useAccordionButton(toDo.id)}/>
-                        {toDo.title}
-                        <X onClick={() => handleDeleteTask(toDo.id)}/>
+                        <ChevronDown onClick={useAccordionButton(todo.id)}/>
+                        {todo.title}
+                        <Link to={`addEdit`} state={{todo:todo}}>
+                            <Pen/>
+                        </Link>
+                        <X onClick={() => handleDeleteTask(todo.id)}/>
                     </div>
                 </Card.Header>
-            <Accordion.Collapse eventKey={toDo.id}>
+            <Accordion.Collapse eventKey={todo.id}>
                 <Card.Body>
-                    <Card.Title>{toDo.category}</Card.Title>
+                    <Card.Title>{todo.category}</Card.Title>
                     {
-                        toDo.subTasks.map((item, index) =>
+                        todo.subTasks.map((item, index) =>
                             <div key={index} style={{display:'flex',justifyContent:'space-around'}}>
                                 <Card.Text>
                                     {item}
                                 </Card.Text>
                                 <Card.Text>
-                                    <Pen onClick={() => handleEdit(item)}/>
-                                    <X onClick={() => handleDelete(item)}/>
+                                    <Pen onClick={() => handleEditSubTask(item)}/>
+                                    <X onClick={() => handleDeleteSubTask(item)}/>
                                 </Card.Text>
                             </div>
                         )
                     }
-                    <PlusCircle onClick={handleAddToDo}/>
+                    <PlusCircle onClick={handleAddSubTask}/>
                 </Card.Body>
             </Accordion.Collapse>
         </Card>
     )
 }
-
-export default TodoCard

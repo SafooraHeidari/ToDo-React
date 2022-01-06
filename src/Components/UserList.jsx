@@ -3,10 +3,11 @@ import {Link} from "react-router-dom";
 import {Container, Row, Col, InputGroup, FormControl} from "react-bootstrap";
 
 import ProfileCard from "./ProfileCard";
-import {UserContext} from "../root";
+import {ToDoContext} from "../root";
 
 const UserList = () => {
-    const userList = useContext(UserContext);
+    const {userss, dispatch} = useContext(ToDoContext);
+
     const [userfilter, setUserfilter] = useState('');
 
     return (
@@ -26,9 +27,9 @@ const UserList = () => {
                     </Col>
                 </Row>
                 <Row className='mt-3'>
-                    {userList.filter(item => item.name.toLowerCase().includes(userfilter.toLowerCase())).length === 0 ?
+                    {userss.filter(item => item.name.toLowerCase().includes(userfilter.toLowerCase())).length === 0 ?
                         <h1 className='text-center'>There is no monster with this name</h1> :
-                        userList.filter(item => item.name.toLowerCase().includes(userfilter.toLowerCase()))
+                        userss.filter(item => item.name.toLowerCase().includes(userfilter.toLowerCase()))
                             .map(item => (
                                 <Col className='mt-3' key={item.id} xs={12} sm={6} md={4} lg={3}>
                                     <Link to={`/${item.id}`}>

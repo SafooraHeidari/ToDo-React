@@ -9,6 +9,7 @@ export default function Test() {
             .then((json) => {
                 setUsers(json.users)
             })
+
     }, [])
 
     return (

@@ -2,57 +2,38 @@
 export default function reducer(state, action) {
     const { type, payload } = action;
     switch (type) {
-        // setDataList(dataList.filter(item => item.id !== id))
-
+        case "initialState":
+            return [...state, ...payload];
         case "deleteTask":
-            return state.filter((item) => item.id !== payload.id);
+            return state.map(user => (user.id !== payload.userId) ? user : {...user, todo: user.todo.filter(item => item.id !== payload.todoId)});
         case "AddTodo":
-            return [...state, payload.curData];
-
-
-        case "addToDoListItem":
-            return [
-                ...state,
+            return state.map(user => (user.id !== payload.userId) ? user : {...user, todo: [...user.todo, payload.todo]});
+        case "EditTodo":
+            return state.map(user => (user.id !== payload.userId) ? user : {...user, todo: []})
+        case "handleAddSubTask":
+            return state.map(user => (user.id === payload.userId) ?
                 {
-                    id: 32,
-                    name: payload.name,
-                    description: payload.description,
-                    items: [],
-                },
-            ];
-        case "deleteTodoListItem":
-            return state.filter((item) => item.id !== payload.id);
-        case "addToDoItems":
-            return state.map((item) =>
-                item.id === payload.TodoId
-                    ? {
-                        ...item,
-                        items: [
-                            ...item.items,
-                            { id: 35, title: payload.title, status: false },
-                        ],
-                    }
-                    : item
-            );
-        case "updateTodoItemStatus":
-            return state.map((todo) =>
-                todo.id === payload.todoID
-                    ? {
-                        ...todo,
-                        items: todo.items.map((item) =>
-                            item.id === payload.itemId
-                                ? { ...item, status: payload.checked }
-                                : item
-                        ),
-                    }
-                    : todo
-            );
-        case "deleteTodoItem":
-            return state.map((todo) =>
-                todo.id === payload.todoId
-                    ? { ...todo, items: todo.items.filter(item=> item.id !== payload.itemId) }
-                    : todo
-            );
+                    ...user, todo: user.todo.map(todo => (todo.id === payload.todoId) ?
+                        {...todo, subTasks: [...todo.subTasks, payload.title]}
+                        : todo)
+                }
+             :user);
+        case "handleDeleteSubTask":
+            return state.map(user => (user.id === payload.userId) ?
+                {
+                    ...user, todo: user.todo.map(todo => (todo.id === payload.todoId) ?
+                        {...todo, subTasks: todo.subTasks.filter(item => item !== payload.taskName)}
+                        : todo)
+                }
+                :user);
+        case "handleEditSubTask":
+            return state.map(user => (user.id === payload.userId) ?
+                {
+                    ...user, todo: user.todo.map(todo => (todo.id === payload.todoId) ?
+                        {...todo, subTasks: todo.subTasks.map(item => (item !== payload.oldTaskName ? item: payload.newTaskName))}
+                        : todo)
+                }
+                :user);
         default:
             return state;
     }

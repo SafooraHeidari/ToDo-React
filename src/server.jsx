@@ -41,28 +41,21 @@ const toDoList = [
 
 const users = [{id: 1, name:"safoora", email:"heidari"},
     {id: 2, name:"fateme", email:"sahebi"},
-    {id: 3, name:"fateme", email:"sahebi"},
+    {id: 3, name:"alireza", email:"abbasi"},
     {id: 4, name:"majid", email:"heidari"},];
 
 
 export function makeServer({ environment = "test" } = {}) {
     let server = createServer({
         environment,
-
         models: {
             user: Model,
         },
-
         seeds(server) {
-            users.map(user => server.create("user", { id: user.id, name: user.name, email: user.email , todo: toDoList})
-            )
-            // server.create("user", { id: 1, name: "Bob", email: "asdfghj" , todo: toDoList})
-            // server.create("user", { name: "Alice" })
+            users.map(user => server.create("user", { id: user.id, name: user.name, email: user.email, todo: toDoList}))
         },
-
         routes() {
             this.namespace = "api"
-
             this.get("/users", (schema) => {
                 return schema.users.all()
             })
