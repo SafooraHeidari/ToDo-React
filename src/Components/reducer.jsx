@@ -9,7 +9,9 @@ export default function reducer(state, action) {
         case "AddTodo":
             return state.map(user => (user.id !== payload.userId) ? user : {...user, todo: [...user.todo, payload.todo]});
         case "EditTodo":
-            return state.map(user => (user.id !== payload.userId) ? user : {...user, todo: []})
+            return state.map(user => (user.id !== payload.userId) ? user : {...user,
+                todo: user.todo.map(todo => (todo.id !== payload.todo.id) ?
+                    todo : payload.todo )})
         case "handleAddSubTask":
             return state.map(user => (user.id === payload.userId) ?
                 {
@@ -34,6 +36,13 @@ export default function reducer(state, action) {
                         : todo)
                 }
                 :user);
+        case "changeStatus":
+            return state.map(user => (user.id === payload.userId) ?
+                {
+                    ...user, todo: user.todo.map(todo => (todo.id === payload.todoId) ?
+                        {...todo, done: !todo.done}
+                    : todo)
+                } : user)
         default:
             return state;
     }

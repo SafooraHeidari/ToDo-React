@@ -12,7 +12,8 @@ const data = {
     category: '',
     title: '',
     subTasks: [],
-    deadLine: ''
+    deadLine: '',
+    done: false
 };
 
 export default function EditAddForm() {
@@ -37,14 +38,14 @@ export default function EditAddForm() {
 
     return (
         <>
-            {location.state ?
+            {location.state.todo.id > 0  ?
                 <div style={{width: '20%', display: 'flex', flexDirection: 'column', gap: '10px'}}>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="Category">Category</InputGroup.Text>
                         <FormControl
                             aria-describedby="Category"
                             value={curDataEdit.category}
-                            onChange={e => setcurDataEdit({...curDataEdit, id: RandomID(), category: e.target.value})}
+                            onChange={e => setcurDataEdit({...curDataEdit, category: e.target.value})}
                         />
                     </InputGroup>
                     <InputGroup className="mb-3">
@@ -55,17 +56,6 @@ export default function EditAddForm() {
                             onChange={e => setcurDataEdit({...curDataEdit, title: e.target.value})}
                         />
                     </InputGroup>
-                    {curDataEdit.subTasks.map(item =>
-                        <InputGroup className="mb-3">
-                            <InputGroup.Text id="Title"></InputGroup.Text>
-                            <FormControl
-                                aria-describedby="Title"
-                                value={item}
-                                onChange={e => setcurDataEdit({...curDataEdit, title: e.target.value})}
-                            />
-                        </InputGroup>
-                    )}
-
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="DeadLine">DeadLine</InputGroup.Text>
                         <FormControl

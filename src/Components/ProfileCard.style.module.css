@@ -1,0 +1,23 @@
+.profileCard{
+    border: 2px solid #1D3236 !important;
+    border-radius: 20px !important;
+    padding: 20px;
+    /*width: 80%;*/
+    margin: auto;
+    background: rgba(198, 213, 165, 0.5) !important;
+}
+.profileCardImage{
+    width: 150px;
+    margin: auto;
+}
+.profileCardText{
+    font-size: 16px;
+    color: #781D42;
+    font-weight: bold;
+    text-align: left;
+}
+.profileCardTextSmall{
+    font-size: 12px !important;
+    color: #781D42;
+    text-align: left;
+}

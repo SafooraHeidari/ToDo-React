@@ -1,0 +1,7 @@
+.globalContainer{
+    height: 100vh;
+    background-image: url("../images/1745619.png");
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}

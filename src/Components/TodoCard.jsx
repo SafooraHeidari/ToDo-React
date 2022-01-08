@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 
 import {Accordion, Card, useAccordionButton} from "react-bootstrap";
-import {Pen, X, PlusCircle, ChevronDown} from 'react-bootstrap-icons';
+import {Pen, X, PlusCircle, ChevronDown, Circle} from 'react-bootstrap-icons';
 
 export default function TodoCard ({todoId, todo, userId, dispatch}) {
 
@@ -17,8 +17,11 @@ export default function TodoCard ({todoId, todo, userId, dispatch}) {
     const handleDeleteTask = (id) => {
         dispatch({type: 'deleteTask', payload: {userId: userId, todoId: id}})
     }
-
+    const changeTaskStatus = (id) => {
+        dispatch({type: 'changeStatus', payload: {userId: userId, todoId: id}})
+    }
     return (
+        <>
         <Card className="text-center">
                 <Card.Header>
                     <div style={{display:'flex',justifyContent:'space-between'}}>
@@ -27,6 +30,8 @@ export default function TodoCard ({todoId, todo, userId, dispatch}) {
                         <Link to={`addEdit`} state={{todo:todo}}>
                             <Pen/>
                         </Link>
+                        {todo.done ? <Circle style={{color:'red'}} onClick={() => changeTaskStatus(todo.id)}/>
+                        : <Circle onClick={() => changeTaskStatus(todo.id)}/>}
                         <X onClick={() => handleDeleteTask(todo.id)}/>
                     </div>
                 </Card.Header>
@@ -50,5 +55,6 @@ export default function TodoCard ({todoId, todo, userId, dispatch}) {
                 </Card.Body>
             </Accordion.Collapse>
         </Card>
+        </>
     )
 }

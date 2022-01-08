@@ -1,32 +1,33 @@
-import {useState, useEffect,useContext} from "react";
+import {useState,useContext} from "react";
 import {Link} from "react-router-dom";
 import {Container, Row, Col, InputGroup, FormControl} from "react-bootstrap";
+import styles from "./UserList.style.module.css"
 
 import ProfileCard from "./ProfileCard";
 import {ToDoContext} from "../root";
+import {Search} from "react-bootstrap-icons";
 
 const UserList = () => {
     const {userss, dispatch} = useContext(ToDoContext);
-
     const [userfilter, setUserfilter] = useState('');
 
     return (
-        <div>
-            <Container className='mt-3'>
-                <Row className='mt-3'>
-                    <Col>
-                        <InputGroup className="mb-3">
+        <div className={styles.globalContainer}>
+            <Container className={styles.profileCardsContainer}>
+                <Row>
+                    <Col className={styles.searchInput}>
+                        <InputGroup>
                             <FormControl
-                                placeholder="Monster name"
-                                aria-label="Monster name"
+                                placeholder="User name"
+                                aria-label="User name"
                                 aria-describedby="basic-addon2"
                                 onChange={e => setUserfilter(e.target.value)}
                             />
-                            <InputGroup.Text id="basic-addon2">Search</InputGroup.Text>
+                            <InputGroup.Text id="basic-addon2"><Search/></InputGroup.Text>
                         </InputGroup>
                     </Col>
                 </Row>
-                <Row className='mt-3'>
+                <Row>
                     {userss.filter(item => item.name.toLowerCase().includes(userfilter.toLowerCase())).length === 0 ?
                         <h1 className='text-center'>There is no monster with this name</h1> :
                         userss.filter(item => item.name.toLowerCase().includes(userfilter.toLowerCase()))
