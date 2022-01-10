@@ -24,7 +24,6 @@ export default function EditAddForm() {
     const [curDataEdit, setcurDataEdit] = useState(location.state.todo);
     const {toDoList, dispatch} = useContext(ToDoContext);
 
-
     const handleSubmit = () => {
         dispatch({type: 'AddTodo', payload: {todo: curData, userId: params.id}})
     }
@@ -72,7 +71,6 @@ export default function EditAddForm() {
                 </div>
                 :
                 <div style={{width: '20%', display: 'flex', flexDirection: 'column', gap: '10px'}}>
-
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="Category">Category</InputGroup.Text>
                         <FormControl
@@ -81,7 +79,6 @@ export default function EditAddForm() {
                             onChange={e => setcurData({...curData, id: RandomID(), category: e.target.value})}
                         />
                     </InputGroup>
-
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="Title">Title</InputGroup.Text>
                         <FormControl
@@ -90,7 +87,6 @@ export default function EditAddForm() {
                             onChange={e => setcurData({...curData, title: e.target.value})}
                         />
                     </InputGroup>
-
                     {cntr >= 1 && <FormControl value={curData.subTasks[0]}
                                                onChange={e => setcurData({
                                                    ...curData,

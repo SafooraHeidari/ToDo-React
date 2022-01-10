@@ -1,6 +1,6 @@
 import {useContext, useState} from "react";
 import TodoCard from "./TodoCard";
-import {Accordion} from "react-bootstrap";
+import {Accordion, ButtonGroup, Button} from "react-bootstrap";
 import {ToDoContext} from "../root";
 
 export default function ToDoCardList({id}) {
@@ -8,14 +8,25 @@ export default function ToDoCardList({id}) {
     const [filter, setFilter] = useState(1);
 
     return (
-        <Accordion className='w-25'>
-            {userss.length > 1 &&
+            <Accordion className='w-25'>
+                <ButtonGroup aria-label="Basic example">
+                    <Button onClick={() => setFilter(1)} variant="secondary">All</Button>
+                    <Button onClick={() => setFilter(2)} variant="secondary">Complete</Button>
+                    <Button onClick={() => setFilter(3)} variant="secondary">Active</Button>
+                </ButtonGroup>
                 <>
-                    {userss[id-1].todo.map(item =>
-                            <TodoCard key={item.id} todoId={item.id} todo={item} userId={id} dispatch={dispatch}/>
+                    {filter === 1 && userss[id-1].todo.map(item =>
+                        <TodoCard key={item.id} todoId={item.id} todo={item} userId={id} dispatch={dispatch}/>
                     )}
-                </>}
-
-        </Accordion>
+                    {filter === 2 && userss[id-1].todo.map(item => item.done ?
+                        <TodoCard key={item.id} todoId={item.id} todo={item} userId={id} dispatch={dispatch}/>
+                        : <></>
+                    )}
+                    {filter === 3 && userss[id-1].todo.map(item => !item.done ?
+                        <TodoCard key={item.id} todoId={item.id} todo={item} userId={id} dispatch={dispatch}/>
+                        : <></>
+                    )}
+                </>
+            </Accordion>
     )
 }

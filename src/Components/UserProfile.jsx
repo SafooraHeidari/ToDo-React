@@ -16,9 +16,10 @@ export default function UserProfile(){
         <div className={styles.globalContainer}>
             {userss.length &&
                 <>
+                    {console.log(userss[params.id - 1])}
                     <ProfileCard name={userss[params.id-1].name} image={'https://i.pravatar.cc/150?img=' + userss[params.id-1].id} description={userss[params.id-1].email}/>
                     <ToDoCardList id = {params.id}/>
-                    <ProgressCard/>
+                    <ProgressCard percent={userss[params.id-1].progressPercent}/>
                     <Outlet/>
                 </>}
         </div>

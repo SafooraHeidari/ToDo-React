@@ -29,20 +29,10 @@ const toDoList = [
         id: 4,
         category: 'uni',
         title: 'meeting',
-        subTasks: ['dr1', 'dr2'],
-        deadLine: '2',
-        done: false
-    },
-    {
-        id: 5,
-        category: 'uni',
-        title: 'meeting',
-        subTasks: ['dr1', 'dr2'],
+        subTasks: ['dr1'],
         deadLine: '2',
         done: false
     }];
-
-
 
 const users = [{id: 1, name:"safoora heidari", email:"safoora@gmail.com"},
     {id: 2, name:"fateme sahebi", email:"fateme@gmail.com"},
@@ -57,7 +47,14 @@ export function makeServer({ environment = "test" } = {}) {
             user: Model,
         },
         seeds(server) {
-            users.map(user => server.create("user", { id: user.id, name: user.name, email: user.email, todo: toDoList}))
+            users.map(user => server.create("user", {id: user.id, name: user.name, email: user.email,
+                todo: toDoList, progressPercent: function () {
+                // let a = 0;
+                // let b = 0;
+                // this.todo.map(todo => todo.subTasks.length+a)
+                // this.todo.map(todo => todo.done && todo.subTasks.length+b)
+                return (this.todo.subTasks.length)
+                }}))
         },
         routes() {
             this.namespace = "api"
