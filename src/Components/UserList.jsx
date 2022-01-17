@@ -29,7 +29,7 @@ const UserList = () => {
                 </Row>
                 <Row>
                     {userss.filter(item => item.name.toLowerCase().includes(userfilter.toLowerCase())).length === 0 ?
-                        <h1 className='text-center'>There is no monster with this name</h1> :
+                        <h1 className='text-center'>There is no user with this name</h1> :
                         userss.filter(item => item.name.toLowerCase().includes(userfilter.toLowerCase()))
                             .map(item => (
                                 <Col className='mt-3' key={item.id} xs={12} sm={6} md={4} lg={3}>

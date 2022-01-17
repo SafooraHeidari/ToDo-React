@@ -1,7 +1,7 @@
 import {Link} from "react-router-dom";
 
 import {Accordion, Card, useAccordionButton} from "react-bootstrap";
-import {Pen, X, PlusCircle, ChevronDown, Circle} from 'react-bootstrap-icons';
+import {Pen, X, PlusCircle, ChevronDown, Circle, CheckCircleFill} from 'react-bootstrap-icons';
 
 export default function TodoCard ({todoId, todo, userId, dispatch}) {
 
@@ -22,36 +22,40 @@ export default function TodoCard ({todoId, todo, userId, dispatch}) {
     }
     return (
         <>
-        <Card className="text-center">
+        <Card>
                 <Card.Header>
-                    <div style={{display:'flex',justifyContent:'space-between'}}>
-                        <ChevronDown onClick={useAccordionButton(todo.id)}/>
+                    <div className='d-flex justify-content-between align-items-baseline'>
+                        <ChevronDown style={{cursor:'pointer'}} onClick={useAccordionButton(todo.id)}/>
                         {todo.title}
-                        <Link to={`addEdit`} state={{todo:todo}}>
-                            <Pen/>
-                        </Link>
-                        {todo.done ? <Circle style={{color:'red'}} onClick={() => changeTaskStatus(todo.id)}/>
-                        : <Circle onClick={() => changeTaskStatus(todo.id)}/>}
-                        <X onClick={() => handleDeleteTask(todo.id)}/>
+                        <div className='d-flex justify-content-between align-items-center w-25'>
+                            <Link to={`addEdit`} state={{todo:todo}}>
+                                <Pen style={{cursor:'pointer'}} className='text-dark'/>
+                            </Link>
+                            {todo.done ? <CheckCircleFill className='text-success' onClick={() => changeTaskStatus(todo.id)}/>
+                                : <Circle style={{cursor:'pointer'}} onClick={() => changeTaskStatus(todo.id)}/>}
+                            <X style={{cursor:'pointer'}} onClick={() => handleDeleteTask(todo.id)}/>
+                        </div>
                     </div>
                 </Card.Header>
             <Accordion.Collapse eventKey={todo.id}>
                 <Card.Body>
-                    <Card.Title>{todo.category}</Card.Title>
+                    <Card.Title className='text-center'>{todo.category}</Card.Title>
                     {
                         todo.subTasks.map((item, index) =>
-                            <div key={index} style={{display:'flex',justifyContent:'space-around'}}>
+                            <div key={index} className='d-flex justify-content-between'>
                                 <Card.Text>
                                     {item}
                                 </Card.Text>
-                                <Card.Text>
-                                    <Pen onClick={() => handleEditSubTask(item)}/>
-                                    <X onClick={() => handleDeleteSubTask(item)}/>
+                                <Card.Text className='d-flex justify-content-between'>
+                                    <Pen style={{cursor:'pointer'}} onClick={() => handleEditSubTask(item)}/>
+                                    <X style={{cursor:'pointer'}} onClick={() => handleDeleteSubTask(item)}/>
                                 </Card.Text>
                             </div>
                         )
                     }
-                    <PlusCircle onClick={handleAddSubTask}/>
+                    <div className='text-center'>
+                        <PlusCircle style={{cursor:'pointer'}} onClick={handleAddSubTask}/>
+                    </div>
                 </Card.Body>
             </Accordion.Collapse>
         </Card>

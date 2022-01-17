@@ -38,7 +38,7 @@ export default function EditAddForm() {
     return (
         <>
             {location.state.todo.id > 0  ?
-                <div style={{width: '20%', display: 'flex', flexDirection: 'column', gap: '10px'}}>
+                <div className='d-flex flex-column gap-2'>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="Category">Category</InputGroup.Text>
                         <FormControl
@@ -63,14 +63,14 @@ export default function EditAddForm() {
                             onChange={e => setcurDataEdit({...curDataEdit, deadLine: e.target.value})}
                         />
                     </InputGroup>
-                    <Link to={`/${params.id}`}>
-                        <Button variant="primary" onClick={handleSubmitEdit}>
+                    <Link className='m-auto' to={`/${params.id}`}>
+                        <Button variant="success" onClick={handleSubmitEdit}>
                             Submit
                         </Button>
                     </Link>
                 </div>
                 :
-                <div style={{width: '20%', display: 'flex', flexDirection: 'column', gap: '10px'}}>
+                <div className='d-flex flex-column gap-2'>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="Category">Category</InputGroup.Text>
                         <FormControl
@@ -112,7 +112,7 @@ export default function EditAddForm() {
                                                    ...curData,
                                                    subTasks: [curData.subTasks[0], curData.subTasks[1], curData.subTasks[2], curData.subTasks[3], curData.subTasks[4] = e.target.value]
                                                })}/>}
-                    <PlusCircle onClick={handleAddSubTask}/>
+                    <PlusCircle style={{cursor:'pointer'}} className='mb-3 m-auto' onClick={handleAddSubTask}/>
                     <InputGroup className="mb-3">
                         <InputGroup.Text id="DeadLine">DeadLine</InputGroup.Text>
                         <FormControl
@@ -121,8 +121,8 @@ export default function EditAddForm() {
                             onChange={e => setcurData({...curData, deadLine: e.target.value})}
                         />
                     </InputGroup>
-                    <Link to={`/${params.id}`}>
-                        <Button variant="primary" onClick={handleSubmit}>
+                    <Link className='m-auto' to={`/${params.id}`}>
+                        <Button variant="success" onClick={handleSubmit}>
                             Submit
                         </Button>
                     </Link>

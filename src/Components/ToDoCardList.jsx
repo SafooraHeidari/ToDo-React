@@ -1,15 +1,17 @@
-import {useContext, useState} from "react";
+import {Fragment, useContext, useState} from "react";
 import TodoCard from "./TodoCard";
 import {Accordion, ButtonGroup, Button} from "react-bootstrap";
 import {ToDoContext} from "../root";
+import AddButton from "./addButton";
 
 export default function ToDoCardList({id}) {
     const {userss, dispatch} = useContext(ToDoContext);
     const [filter, setFilter] = useState(1);
 
     return (
-            <Accordion className='w-25'>
-                <ButtonGroup aria-label="Basic example">
+        <Fragment className='text-center d-flex align-items-center justify-content-center'>
+            <Accordion className='w-100'>
+                <ButtonGroup aria-label="Basic example" className='d-flex align-items-center justify-content-center mb-3'>
                     <Button onClick={() => setFilter(1)} variant="secondary">All</Button>
                     <Button onClick={() => setFilter(2)} variant="secondary">Complete</Button>
                     <Button onClick={() => setFilter(3)} variant="secondary">Active</Button>
@@ -28,5 +30,6 @@ export default function ToDoCardList({id}) {
                     )}
                 </>
             </Accordion>
+        </Fragment>
     )
 }
